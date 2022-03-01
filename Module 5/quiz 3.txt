@@ -1,0 +1,28 @@
+String[] baseArray = baseString.trim().split("\\s+");
+        String decodedMsg = "";
+        try {
+            String[] words = encodedMsg.split("\\@");
+            for (int i = 0; i < words.length; i++) {
+                try {
+                    String[] letters = words[i].split("\\,");
+                    char nextWord[] = new char[letters.length];
+                    for (int j = 0; j < letters.length; j++) {
+                        int x = Integer.parseInt(letters[j].split("\\-")[0]) - 1;
+                        int y = Integer.parseInt(letters[j].split("\\-")[1]) - 1;
+                        nextWord[j] = baseArray[x].charAt(y);
+                    }
+                    if (i != (words.length - 1)) {
+                        decodedMsg += new String(nextWord) + " ";
+                   } else {
+                        decodedMsg += new String(nextWord);
+                    }
+                }
+                catch (Exception e) {
+                    return "Invalid message format";
+                }
+            }
+        }
+        catch (Exception e) {
+            return "Invalid message format";
+        }
+        return decodedMsg;

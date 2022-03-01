@@ -1,0 +1,45 @@
+public static Scanner sc = new Scanner(System.in);
+    public static PrintWriter out = new PrintWriter(System.out, true);
+    public static int n;
+    public static int tree[], a[], b[];
+    public static int N = 200005;
+
+    public static int read(int x) {//binary indexed tree read
+        int ret = 0;
+        while (x > 0) {
+            ret += tree[x];
+            x -= (x & -x);
+        }
+        return ret;
+    }
+ public static void upd(int x) {//binary indexed tree upd
+        while (x < N) {
+            tree[x]++;
+            x += (x & -x);
+        }
+    }
+
+    public static void main(String[] args) {
+        tree = new int[N]; //bit
+        a = new int[N];  //input array
+        b = new int[N]; //partial sums array
+        int n = sc.nextInt();
+        long cur = 0; //number of swaps in original array.
+        for (int i = 0; i < n; i++) {
+            a[i] = sc.nextInt();
+            upd(a[i]);
+           cur += i + 1 - read(a[i]);
+            b[a[i]]++;
+        }
+        for (int i = 1; i < N; i++) {
+            b[i] += b[i - 1];
+        }
+        long ov_res = cur;
+        for (int i = n - 1; i > 0; i--) {
+            cur += b[a[i] - 1];
+            cur -= (n - b[a[i]]);
+            ov_res = Math.min(ov_res, cur);
+        }
+        int mod = 1000000007;
+        out.println(ov_res % mod);
+    }	
