@@ -1,0 +1,109 @@
+import java.util.*;
+public class Source {
+    static Node root;
+    static class Node{
+        int data;
+        Node left;
+        Node right;
+        Node(int data){
+            this.data = data;
+        }
+    }
+    static List<Integer> inOrderList = new ArrayList<>();
+    static List<Integer> preOrderList = new ArrayList<>();
+    static List<Integer> postOrderList = new ArrayList<>();
+
+    private static void createNode(int[] parent, int i, Node[] created) {
+        // If this node is already created
+        if (created[i] != null)
+            return;
+
+        // Create a new node and set created[i]
+        created[i] = new Node(i);
+
+        // If 'i' is root, change root pointer and return
+        if (parent[i] == -1){
+            root = created[i];
+            return;
+        }
+
+        // If parent is not created, then create parent first
+        if (created[parent[i]] == null)
+            createNode(parent, parent[i], created);
+
+        // Find parent pointer
+        Node p = created[parent[i]];
+
+        // If this is first child of parent or data with lower value will be left child
+        if (p.left == null || created[i].data < p.left.data)
+            p.left = created[i];
+        else // If second child
+            p.right = created[i];
+    }
+
+    /* Creates tree from parent[0..n-1] and returns root of
+       the created tree */
+    private static Node createTree(int[] parent) {
+        // Create an array created[] to keep track of
+        // created nodes, initialize all entries as NULL
+        int n = parent.length;
+        Node[] created = new Node[n];
+        for (int i = 0; i < n; i++)
+            created[i] = null;
+
+        for (int i = 0; i < n; i++)
+            createNode(parent, i, created);
+
+        return root;
+    }
+    private static void inOrder(Node node){
+        if(node == null)
+            return;
+        inOrder(node.left);
+        inOrderList.add(node.data);
+        inOrder(node.right);
+    }
+    private static void preOrder(Node node){
+        if(node == null)
+            return;
+        preOrderList.add(node.data);
+        preOrder(node.left);
+        preOrder(node.right);
+    }
+    private static void postOrder(Node node){
+        if(node == null)
+            return;
+        postOrder(node.left);
+        postOrder(node.right);
+        postOrderList.add(node.data);
+    }
+    public static int calculateMedian(int[] parent){
+        List<Integer> medianList = new ArrayList<>();
+        for (int i = 0; i < parent.length; i++) {
+            int[] arr = {inOrderList.get(i),preOrderList.get(i),postOrderList.get(i)};
+            Arrays.sort(arr);
+            medianList.add(arr[1]);
+        }
+        return medianList.stream().reduce(0, Integer::sum);
+    }
+    private static void traverse(Node root){
+        inOrder(root);
+        preOrder(root);
+        postOrder(root);
+    }
+
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        int M;
+        M=scan.nextInt();
+        int[] parent = new int[M+1];
+        parent[0] = -1;
+        for(int j=1;j<=M;j++)
+            parent[j]=scan.nextInt();
+
+        createTree(parent);
+        traverse(root);
+        int result = calculateMedian(parent);
+        System.out.print(result);
+    }
+}

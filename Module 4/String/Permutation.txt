@@ -1,0 +1,18 @@
+ int count = 0;
+        if (left == right)
+            System.out.println(str);
+        else {
+            for (int i = left; i <= right; i++) {
+                str = swapChar(str, left, i);
+                stringPermutations(str, left+1, right);
+                str = swapChar(str, left, i);
+            }
+        }
+  }
+    public static String swapChar(String str, int i, int j) {
+        char tempChar;
+        char[] charArray = str.toCharArray();
+        tempChar = charArray[i] ;
+        charArray[i] = charArray[j];
+        charArray[j] = tempChar;
+        return String.valueOf(charArray);

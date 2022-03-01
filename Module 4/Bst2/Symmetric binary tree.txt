@@ -1,0 +1,83 @@
+import java.util.*;
+
+//class representing Structure of node in the binary tree
+class treeNode {
+    int data;
+    treeNode left, right;
+
+    treeNode(int value) {
+        data = value;
+        left = null;
+        right = null;
+    }
+}
+
+public class Source {
+    treeNode rootNode;
+    
+     public boolean isSymmetric(treeNode root) {
+        Queue<treeNode> q = new LinkedList<treeNode>();
+        q.add(root.left);
+        q.add(root.right);
+
+        while (!q.isEmpty()){
+            treeNode tempLeft = q.remove();
+            treeNode tempRight = q.remove();
+            
+            if (tempLeft==null && tempRight==null)
+                continue;
+            
+            if ((tempLeft==null && tempRight!=null) ||
+                    (tempLeft!=null && tempRight==null))
+                return false;
+            
+            if (tempLeft.data != tempRight.data)
+                return false;
+            
+            q.add(tempLeft.left);
+            q.add(tempRight.right);
+            q.add(tempLeft.right);
+            q.add(tempRight.left);
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+
+        Source binaryTree = new Source();
+
+        Scanner in = new Scanner(System.in);
+
+        //number of elements
+        int n = in.nextInt(), element;
+
+        //queue used to create a binary tree
+        Queue<treeNode> q = new LinkedList<treeNode>();
+
+        // creating a new binary tree. 
+        binaryTree.rootNode = new treeNode(in.nextInt());
+        q.add(binaryTree.rootNode);
+        treeNode cur = null;
+        for (int i = 1; i < n; i++) {
+
+            cur = q.remove();
+
+            //Note: if the element is -1 then the node is null
+            element = in.nextInt();
+            if (element != -1) {
+                cur.left = new treeNode(element);
+                q.add(cur.left);
+            }
+            i++;
+
+            //Note: if the element is -1 then the node is null
+            element = in.nextInt();
+            if (element != -1) {
+                cur.right = new treeNode(element);
+                q.add(cur.right);
+            }
+        }
+        //write your code here
+            System.out.println(binaryTree.isSymmetric(binaryTree.rootNode));
+    }
+}

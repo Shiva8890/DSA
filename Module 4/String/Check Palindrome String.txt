@@ -1,0 +1,12 @@
+  String nstr="";
+        char ch;
+      for (int i=0; i<str.length(); i++){
+        ch= str.charAt(i);
+        nstr= ch+nstr;
+      }
+      if(nstr.equals(str)){
+          return true;
+      }
+      else{
+          return false;
+      }

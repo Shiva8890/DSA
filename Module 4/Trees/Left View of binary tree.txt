@@ -1,0 +1,78 @@
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+  class treeNode {
+    int data;
+    treeNode left;
+    treeNode right;
+
+    public treeNode(int element) {
+        data = element;
+        left = null;
+        right = null;
+    }
+  }
+
+ class Source {
+    static treeNode rootNode;
+    public static void main(String[] args) {
+        Source tree = new Source();
+        treeNode rootNode;
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt(), element;
+
+        Queue<treeNode> q = new LinkedList<treeNode>();
+        rootNode = new treeNode(in.nextInt());
+        q.add(rootNode);
+        treeNode cur = null;
+
+        for (int i = 1; i < n; i++) {
+            cur = q.remove();
+            //Note: if the element is -1 then the node is null
+            element = in.nextInt();
+            if (element != -1) {
+                cur.left = new treeNode(element);
+                q.add(cur.left);
+            }
+            i++;
+            element = in.nextInt();
+            //Note: if the element is -1 then the node is null
+            if (element != -1) {
+                cur.right = new treeNode(element);
+                q.add(cur.right);
+            }
+        }
+        tree.printLeftView(rootNode);
+    }
+    private void printLeftView(treeNode root)
+    {
+        if (root == null)
+            return;
+        Queue<treeNode> queue = new LinkedList<>();
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            // number of nodes at current level
+            int n = queue.size();
+
+            // Traverse all nodes of current level
+            for (int i = 1; i <= n; i++) {
+                treeNode temp = queue.poll();
+
+                // Print the left most element at
+                // the level
+                if (i == 1)
+                    System.out.println(temp.data);
+
+                // Add left node to queue
+                if (temp.left != null)
+                    queue.add(temp.left);
+
+                // Add right node to queue
+                if (temp.right != null)
+                    queue.add(temp.right);
+            }
+        }
+    }
+
+}

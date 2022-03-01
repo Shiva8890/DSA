@@ -1,0 +1,132 @@
+import java.io.*;
+import java.util.*;
+import java.lang.Math;
+public class Source {
+    static Node root;
+    static class Node{
+        int data;
+        Node left;
+        Node right;
+        Node(int data){
+            this.data = data;
+        }
+    }
+
+    static List<Integer> inOrderList = new ArrayList<>();
+    static List<Integer> preOrderList = new ArrayList<>();
+    static List<Integer> postOrderList = new ArrayList<>();
+    static List<Integer> bfsList = new ArrayList<>();
+
+    public static Node createTree(int[] parent) {
+        // Create an array created[] to keep track of
+        // created nodes, initialize all entries as NULL
+        int n = parent.length;
+        Node[] created = new Node[n];
+        for (int i = 0; i < n; i++)
+            created[i] = null;
+
+        for (int i = 0; i < n; i++)
+            createNode(parent, i, created);
+
+        return root;
+    }
+    private static void createNode(int[] parent, int i, Node[] created) {
+        // If this node is already created
+        if (created[i] != null)
+            return;
+
+        // Create a new node and set created[i]
+        created[i] = new Node(i);
+
+        // If 'i' is root, change root pointer and return
+        if (parent[i] == -1){
+            root = created[i];
+            return;
+        }
+
+        // If parent is not created, then create parent first
+        if (created[parent[i]] == null)
+            createNode(parent, parent[i], created);
+
+        // Find parent pointer
+        Node p = created[parent[i]];
+
+        // If this is first child of parent or data with lower value will be left child
+        if (p.left == null || created[i].data < p.left.data)
+            p.left = created[i];
+        else // If second child
+            p.right = created[i];
+    }
+
+    public static void traverse(Node root){
+        inOrder(root);
+        preOrder(root);
+        postOrder(root);
+        bfs(root);
+    }
+    private static void inOrder(Node node){
+        if(node == null)
+            return;
+        inOrder(node.left);
+        inOrderList.add(node.data);
+        inOrder(node.right);
+    }
+    private static void preOrder(Node node){
+        if(node == null)
+            return;
+        preOrderList.add(node.data);
+        preOrder(node.left);
+        preOrder(node.right);
+    }
+    private static void postOrder(Node node){
+        if(node == null)
+            return;
+        postOrder(node.left);
+        postOrder(node.right);
+        postOrderList.add(node.data);
+    }
+    private static void bfs(Node root) {
+        if (root == null)
+            return;
+        Queue<Node> nodes = new LinkedList<>();
+        nodes.add(root);
+        while (!nodes.isEmpty()) {
+            Node temp = nodes.poll();
+            bfsList.add(temp.data);
+            if (temp.left != null)
+                nodes.add(temp.left);
+            if (temp.right != null)
+                nodes.add(temp.right);
+        }
+    }
+
+    public static int mostSimilar(int[] parent){
+        int pre_bfs_diff = getAbsoluteDiff(preOrderList, bfsList);
+        int post_bfs_diff = getAbsoluteDiff(postOrderList, bfsList);
+        int in_bfs_diff = getAbsoluteDiff(inOrderList, bfsList);
+        int min_diff = Math.min(pre_bfs_diff, post_bfs_diff);
+        return Math.min(min_diff, in_bfs_diff);
+    }
+    private static int getAbsoluteDiff(List<Integer> list1, List<Integer> list2){
+        int abs_diff=0;
+        for (int i = 0; i < list1.size(); i++) {
+            abs_diff += Math.abs(preOrderList.get(i) - bfsList.get(i));
+        }
+        return abs_diff;
+    }
+
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        int M;
+        M=scan.nextInt();
+        int[] parent = new int[M+1];
+        parent[0] =-1;
+        for(int j=1;j<=M;j++){
+            parent[j]=scan.nextInt();
+        }
+        createTree(parent);
+        traverse(root);
+        int result = mostSimilar(parent);
+        System.out.print(result);
+    }
+}
