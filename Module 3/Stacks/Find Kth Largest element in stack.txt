@@ -1,0 +1,18 @@
+public static Stack < Integer > sortStack(Stack < Integer > input) {
+       //write your code here
+        Stack<Integer> sortedStack = new Stack<Integer>();
+        while(!input.isEmpty()){
+            Integer temp = input.pop();
+            while (!sortedStack.isEmpty() && sortedStack.peek() > temp)
+                input.push(sortedStack.pop());
+            sortedStack.push(temp);
+        }
+        return sortedStack;
+   }
+
+   public static void findKthLargestNum(Stack <Integer> sortedStack, int k) {
+      //write your code here
+      for(int i=0; i<k-1;i++)
+            sortedStack.pop();
+        System.out.println(sortedStack.peek());
+   }

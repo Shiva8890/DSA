@@ -1,0 +1,13 @@
+Node fast = head, slow = head;
+            if (head == null)
+                return;
+            if( head.next == null) {
+                System.out.println(head.data);
+            } else {
+                //iterate through the linked list till fast pointer reaches the end of the linked list.
+                while (head != null && fast != null && fast.next != null) {
+                    fast = fast.next.next;
+                    slow = slow.next;
+                }
+                System.out.print(slow.data);
+            }

@@ -1,0 +1,11 @@
+Stack<Integer> stk = new Stack<>();
+            while (queue.peek() != null) {
+                Integer num = queue.poll();
+                while(!stk.isEmpty() && stk.peek() < num){
+                    queue.add(stk.pop());
+                }
+                stk.push(num);
+            }
+            while(!stk.isEmpty())
+                queue.add(stk.pop());
+            System.out.println(queue);

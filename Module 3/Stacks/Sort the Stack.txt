@@ -1,0 +1,8 @@
+Stack<Integer> sortedStack = new Stack<Integer>();
+        while(!stack.isEmpty()){
+            Integer temp = stack.pop();
+            while (!sortedStack.isEmpty() && sortedStack.peek() > temp)
+                stack.push(sortedStack.pop());
+            sortedStack.push(temp);
+        }
+        System.out.println(sortedStack);

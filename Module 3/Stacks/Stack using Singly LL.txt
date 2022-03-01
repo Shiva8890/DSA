@@ -1,0 +1,31 @@
+Node head;
+        public Stack() {
+            super();
+            head = null;
+        }
+        public boolean isEmpty() {
+            return head == null;
+        }
+        public void push(int data) {
+            Node temp = new Node(data);
+            temp.setNext(head);
+            head = temp;
+        }
+        public int pop() {
+            if (head == null) {
+                return Integer.MIN_VALUE;
+            }
+            int data = head.getData();
+            head = head.getNext();
+            return data;
+        }
+        public int peek()
+      {
+            if (!isEmpty()) {
+                return head.data;
+            }
+            else {
+                System.out.println(" ");
+                return -1;
+            }
+        }

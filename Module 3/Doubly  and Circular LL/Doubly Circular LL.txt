@@ -1,0 +1,58 @@
+class Node {
+        int data;
+        Node next;
+        Node prev;
+        Node(int data){
+            this.data = data;
+            this.next = null;
+            this.prev = null;
+        }
+    }
+    void push(int data) {
+        Node newNode = new Node(data);
+        if(head == null) {
+            head = newNode;
+            head.next = head;
+            head.prev = head;
+            return;
+        }
+        head.prev = newNode;
+        newNode.next = head;
+        Node last = head;
+        while(last.next != head)
+         last = last.next;
+        last.next = newNode;
+        newNode.prev = last;
+        head.prev = newNode;
+        newNode.next = head;
+    }
+    void insertAtBeg(int data) {
+        Node last = null;
+        Node newNode = new Node(data);
+        if(head == null) {
+            head = newNode;
+            head.next = head;
+            head.prev = head;
+            last = head;
+            return;
+        }
+        last.next = newNode;
+        newNode.prev = last;
+        head.prev = newNode;
+    newNode.next = head;
+        head = newNode;
+    }
+    void print() {
+        if (head == null) {
+            return;
+        }
+        Node temp = head;
+        do {
+            System.out.print(temp.data+" ");
+            temp = temp.next;
+        } while(temp != head);
+        System.out.println();
+        do {
+            System.out.print(temp.prev.data+" ");
+            temp = temp.prev;
+        } while(temp != head);

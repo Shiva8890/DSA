@@ -1,0 +1,20 @@
+if (current == null) {
+            System.out.println(" ");
+            return null;
+        }
+        /* If last node mark it head*/
+        if (current.next == null) {
+            head = current;
+            /* Update next to prev node */
+            current.next = prev;
+            return head;
+        }
+
+        /* Save current.next node for recursive call */
+        Node next1 = current.next;
+
+        /* and update next ..*/
+        current.next = prev;
+
+        recursiveReverse(next1, current);
+        return head;

@@ -1,0 +1,29 @@
+Node head;
+        Node tail;
+        public Queue() {
+            super();
+            head = null;
+            tail = null;
+        }
+        public boolean isEmpty() {
+            return head == null;
+        }
+        public void enQueue(int data) {
+            Node node = new Node(data);
+            if (tail == null) {
+                tail = node;
+                head = node;
+            } else {
+                tail.setNext(node);
+                tail = tail.getNext();
+            }
+        }
+        public int deQueue() {
+            int data = head.getData();
+         head = head.getNext();
+            if (head == null) { // it means it has got empty
+                tail = null;
+            }
+
+            return data;
+        }
