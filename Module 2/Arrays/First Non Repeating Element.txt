@@ -1,0 +1,14 @@
+static int firstNonRepeating(int arr[]){ 
+      //write your logic here
+       int arr_size = arr.length;
+        int i, j;
+        
+        for (i = 0; i < arr_size; i++) { 
+            for (j = 0; j < arr_size; j++) 
+                if (i != j && arr[i] == arr[j]) 
+                    break; 
+            if (j == arr_size) 
+                return arr[i]; 
+        } 
+  
+        return 0; 

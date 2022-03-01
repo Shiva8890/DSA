@@ -1,0 +1,16 @@
+int n = arr.length;
+        int[] altArr = new int[n];
+        int i =0, k=0;
+        int j = n-1;
+
+        Arrays.sort(arr);
+        while(i <= j){
+            if(k%2 != 0){
+                altArr[k++]=arr[i++];
+            } else {
+                altArr[k++] = arr[j--];
+            }
+        }
+        for (int l = 0; l < n; l++) {
+            arr[l] = altArr[l];
+        }

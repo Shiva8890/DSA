@@ -1,0 +1,11 @@
+ for (int i = 1; i < array.length; i++) {
+            int current = array[i];
+            int prev = i-1;
+            while(prev>=0 && array[prev] < current) {
+                array[prev+1] = array[prev];
+                prev--;
+            }
+            array[prev+1] = current;
+        }
+        for(int ele: array)
+            System.out.println(ele);

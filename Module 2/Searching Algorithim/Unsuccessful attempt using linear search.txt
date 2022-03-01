@@ -1,0 +1,6 @@
+int i;
+        for(i=0;i<inputArr.length;i++) {
+            if(inputArr[i] == key)
+                return i;
+        }
+        return i;

@@ -1,0 +1,29 @@
+int[] mergedArray = mergeSortedArraysWithDuplicates(arr1, arr2);
+        int result=0;
+       if (mergedArray.length % 2 != 0) {
+           result = mergedArray[mergedArray.length/2];
+       } else {
+           int loc1 = mergedArray.length/2;
+           int loc2 = loc1-1;
+           result = (mergedArray[loc1] + mergedArray[loc2])/2;
+       }
+        return  result;  
+  }
+  public static int[] mergeSortedArraysWithDuplicates(int[] arr1, int[] arr2) {
+        int m = arr1.length;
+        int n = arr2.length;
+        int i = 0, j = 0, index = 0;
+        int[] mergedarray = new int[m + n];
+        
+        while (i < m && j < n) {
+            if (arr1[i] <= arr2[j])
+                mergedarray[index++] = arr1[i++];
+            else 
+                mergedarray[index++] = arr2[j++];
+        }
+ while (i < m) 
+            mergedarray[index++] = arr1[i++];
+        while (j < n) 
+            mergedarray[index++] = arr2[j++];
+            
+        return mergedarray;
