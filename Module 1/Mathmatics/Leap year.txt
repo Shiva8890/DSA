@@ -1,0 +1,7 @@
+ while(year>0){
+         if (year%4==0){
+             return true;
+         }
+         year = 0;
+     }
+     return false;

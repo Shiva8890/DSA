@@ -1,0 +1,12 @@
+int count = 0, a;
+        
+        while(num > 0)
+        {
+            a = num % 2;
+            if(a == 1)
+            {
+                count++;
+            }
+            num = num / 2;
+        }
+        return count;

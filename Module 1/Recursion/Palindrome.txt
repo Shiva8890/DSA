@@ -1,0 +1,5 @@
+ if (num == 0)
+            return i;
+
+        i = (i*10) + (num%10);
+        return palindrome(num/10, i);
